@@ -213,7 +213,7 @@ for i, chart_data in enumerate(charts_data):
     fig.update_layout(
         title=dict(
             text=chart_data['title'],
-            font=dict(size=20, color='#1f2937', family='Inter', weight=600),
+            font=dict(size=20, color='#1f2937', family='Inter'),
             x=0.05,
             y=0.95
         ),
@@ -226,11 +226,11 @@ for i, chart_data in enumerate(charts_data):
             linecolor='#d1d5db',
             linewidth=1,
             tickfont=dict(size=12, color='#6b7280'),
-            title_font=dict(size=14, color='#374151', weight=500)
+            title_font=dict(size=14, color='#374151')
         ),
         yaxis=dict(
             title=chart_data['yaxis_title'],
-            title_font=dict(size=14, color='#374151', weight=500),
+            title_font=dict(size=14, color='#374151'),
             showgrid=True,
             gridwidth=1,
             gridcolor='#f3f4f6',
@@ -375,4 +375,4 @@ app.layout = html.Div([
 })
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8050)
+    app.run(debug=True, host='127.0.0.1', port='8050')

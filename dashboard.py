@@ -73,6 +73,7 @@ def generate_profit_margins(seed=0):
 app = dash.Dash(__name__, external_stylesheets=[
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap'
 ])
+server = app.server
 
 # Executive summary metrics
 summary_metrics = [

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Executive Business Dashboard
 
 A professional, interactive business intelligence dashboard built with Dash and Plotly, designed for executive-level reporting and board presentations.
@@ -228,3 +229,6 @@ For support and questions:
 **Built with ❤️ for executive analytics and business intelligence**
 
 *Last updated: December 2023* 
+=======
+This is a python dashboard I created using the Cursor IDE
+>>>>>>> 1dee18197fa350d674e9264b315f97f480393a27

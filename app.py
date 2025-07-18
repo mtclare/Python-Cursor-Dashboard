@@ -826,39 +826,41 @@ for metric in summary_metrics:
         'flex': '1'
     }))
 
-# Create the enhanced grid layout
+# Create the enhanced grid layout with better spacing
 grid = []
 for row in range(4):
     grid.append(html.Div([
         html.Div([
             html.H3(charts_data[row*2]['title'], 
-                   style={'fontSize': '20px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0 0 8px 0'}),
+                   style={'fontSize': '18px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0 0 6px 0'}),
             html.P(charts_data[row*2]['subtitle'], 
-                  style={'fontSize': '14px', 'color': CHART_THEME['subtitle_color'], 'margin': '0 0 20px 0', 'lineHeight': '1.5'}),
+                  style={'fontSize': '13px', 'color': CHART_THEME['subtitle_color'], 'margin': '0 0 16px 0', 'lineHeight': '1.4'}),
             charts[row*2]
         ], style={
             'flex': '1', 
             'backgroundColor': CHART_THEME['background'], 
-            'borderRadius': '16px', 
-            'padding': '28px', 
-            'boxShadow': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-            'border': f'1px solid {CHART_THEME["legend_bordercolor"]}'
+            'borderRadius': '12px', 
+            'padding': '20px', 
+            'boxShadow': '0 2px 4px -1px rgba(0, 0, 0, 0.1)',
+            'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
+            'minHeight': '420px'
         }),
         html.Div([
             html.H3(charts_data[row*2+1]['title'], 
-                   style={'fontSize': '20px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0 0 8px 0'}),
+                   style={'fontSize': '18px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0 0 6px 0'}),
             html.P(charts_data[row*2+1]['subtitle'], 
-                  style={'fontSize': '14px', 'color': CHART_THEME['subtitle_color'], 'margin': '0 0 20px 0', 'lineHeight': '1.5'}),
+                  style={'fontSize': '13px', 'color': CHART_THEME['subtitle_color'], 'margin': '0 0 16px 0', 'lineHeight': '1.4'}),
             charts[row*2+1]
         ], style={
             'flex': '1', 
             'backgroundColor': CHART_THEME['background'], 
-            'borderRadius': '16px', 
-            'padding': '28px', 
-            'boxShadow': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-            'border': f'1px solid {CHART_THEME["legend_bordercolor"]}'
+            'borderRadius': '12px', 
+            'padding': '20px', 
+            'boxShadow': '0 2px 4px -1px rgba(0, 0, 0, 0.1)',
+            'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
+            'minHeight': '420px'
         })
-    ], style={'display': 'flex', 'gap': '32px', 'marginBottom': '32px'}))
+    ], style={'display': 'flex', 'gap': '20px', 'marginBottom': '20px'}))
 
 # Create filter components
 # Date range filter
@@ -985,7 +987,7 @@ app.layout = html.Div([
         html.H2('Key Performance Indicators', 
                style={'fontSize': '24px', 'fontWeight': '700', 'color': '#1f2937', 'margin': '0 0 24px 0', 'textAlign': 'center'}),
         html.Div(summary_cards, style={'display': 'flex', 'gap': '24px', 'marginBottom': '48px'})
-    ], style={'maxWidth': '1400px', 'margin': 'auto', 'padding': '0 20px'}),
+    ], style={'width': '100%', 'padding': '0 64px 0 24px', 'margin': '0 auto'}),
     
     # Dashboard content with filters
     html.Div([
@@ -994,15 +996,29 @@ app.layout = html.Div([
         
         # Main content with filters and charts
         html.Div([
-            # Left sidebar with filters
+            # Left sidebar with filters - made narrower and better styled
             html.Div([
                 filter_panel
-            ], style={'width': '280px', 'marginRight': '32px'}),
+            ], style={
+                'width': '220px', 
+                'marginRight': '24px',
+                'flexShrink': '0'
+            }),
             
-            # Main content area with charts
-            html.Div(grid, style={'flex': '1'})
-        ], style={'display': 'flex', 'alignItems': 'flex-start'})
-    ], style={'maxWidth': '1400px', 'margin': 'auto', 'padding': '0 20px'}),
+            # Main content area with charts - improved spacing
+            html.Div(grid, style={
+                'flex': '1',
+                'minWidth': '0',
+                'maxWidth': 'calc(100% - 244px)'  # Account for filter panel width + margin
+            })
+        ], style={
+            'display': 'flex', 
+            'alignItems': 'flex-start',
+            'width': '100%',
+            'maxWidth': '1600px',
+            'margin': '0 auto'
+        }),
+    ], style={'width': '100%', 'padding': '0 20px'}),
     
     # Professional footer with consistent theme colors
     html.Div([
@@ -1014,7 +1030,7 @@ app.layout = html.Div([
             html.Span('Confidential - Board Use Only', 
                      style={'fontSize': '12px', 'color': COLOR_PALETTE['accent'][0], 'fontWeight': '600'})
         ], style={'textAlign': 'center', 'padding': '20px 0', 'borderTop': f'1px solid {CHART_THEME["legend_bordercolor"]}'})
-    ], style={'maxWidth': '1400px', 'margin': 'auto', 'padding': '0 20px'})
+    ], style={'width': '100%', 'padding': '0 64px 0 24px', 'margin': '0 auto'})
     
 ], style={
     'backgroundColor': '#f8fafc',

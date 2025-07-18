@@ -24,12 +24,12 @@ def create_date_range_filter(id_prefix="date", default_days=90):
     
     return html.Div([
         html.H4("Date Range", 
-                style={'fontSize': '16px', 'fontWeight': '600', 'color': CHART_THEME['title_color'], 'marginBottom': '12px'}),
+                style={'fontSize': '14px', 'fontWeight': '600', 'color': CHART_THEME['title_color'], 'marginBottom': '8px'}),
         dcc.DatePickerRange(
             id=f'{id_prefix}-range',
             start_date=start_date.date(),
             end_date=end_date.date(),
-            display_format='MMM DD, YYYY',
+            display_format='MMM DD',
             first_day_of_week=1,  # Monday
             min_date_allowed=end_date - timedelta(days=365*2),  # 2 years back
             max_date_allowed=end_date,
@@ -38,16 +38,11 @@ def create_date_range_filter(id_prefix="date", default_days=90):
             updatemode='bothdates',
             style={
                 'width': '100%',
-                'zIndex': 1000
+                'fontSize': '12px'
             }
         )
     ], style={
-        'marginBottom': '24px',
-        'padding': '16px',
-        'backgroundColor': CHART_THEME['background'],
-        'borderRadius': '8px',
-        'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
-        'boxShadow': '0 1px 3px rgba(0, 0, 0, 0.05)'
+        'marginBottom': '16px'
     })
 
 def create_category_filter(id_prefix, title, options, multi=True):
@@ -65,7 +60,7 @@ def create_category_filter(id_prefix, title, options, multi=True):
     """
     return html.Div([
         html.H4(title, 
-                style={'fontSize': '16px', 'fontWeight': '600', 'color': CHART_THEME['title_color'], 'marginBottom': '12px'}),
+                style={'fontSize': '14px', 'fontWeight': '600', 'color': CHART_THEME['title_color'], 'marginBottom': '8px'}),
         dcc.Dropdown(
             id=f'{id_prefix}-dropdown',
             options=options,
@@ -74,17 +69,11 @@ def create_category_filter(id_prefix, title, options, multi=True):
             clearable=False,
             style={
                 'width': '100%',
-                'borderRadius': '6px',
-                'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
+                'fontSize': '12px'
             }
         )
     ], style={
-        'marginBottom': '24px',
-        'padding': '16px',
-        'backgroundColor': CHART_THEME['background'],
-        'borderRadius': '8px',
-        'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
-        'boxShadow': '0 1px 3px rgba(0, 0, 0, 0.05)'
+        'marginBottom': '16px'
     })
 
 def create_range_slider(id_prefix, title, min_val, max_val, step=1, default_range=None):
@@ -107,7 +96,7 @@ def create_range_slider(id_prefix, title, min_val, max_val, step=1, default_rang
         
     return html.Div([
         html.H4(title, 
-                style={'fontSize': '16px', 'fontWeight': '600', 'color': CHART_THEME['title_color'], 'marginBottom': '12px'}),
+                style={'fontSize': '14px', 'fontWeight': '600', 'color': CHART_THEME['title_color'], 'marginBottom': '8px'}),
         dcc.RangeSlider(
             id=f'{id_prefix}-slider',
             min=min_val,
@@ -115,8 +104,8 @@ def create_range_slider(id_prefix, title, min_val, max_val, step=1, default_rang
             step=step,
             value=default_range,
             marks={
-                min_val: {'label': f'{min_val}', 'style': {'color': CHART_THEME['subtitle_color']}},
-                max_val: {'label': f'{max_val}', 'style': {'color': CHART_THEME['subtitle_color']}}
+                min_val: {'label': f'{min_val}', 'style': {'color': CHART_THEME['subtitle_color'], 'fontSize': '11px'}},
+                max_val: {'label': f'{max_val}', 'style': {'color': CHART_THEME['subtitle_color'], 'fontSize': '11px'}}
             },
             tooltip={'placement': 'bottom', 'always_visible': False},
             allowCross=False,
@@ -124,17 +113,12 @@ def create_range_slider(id_prefix, title, min_val, max_val, step=1, default_rang
         ),
         html.Div([
             html.Span(f"{default_range[0]}", id=f"{id_prefix}-min-value", 
-                     style={'fontSize': '14px', 'color': CHART_THEME['subtitle_color']}),
+                     style={'fontSize': '12px', 'color': CHART_THEME['subtitle_color']}),
             html.Span(f"{default_range[1]}", id=f"{id_prefix}-max-value", 
-                     style={'fontSize': '14px', 'color': CHART_THEME['subtitle_color']})
-        ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '8px'})
+                     style={'fontSize': '12px', 'color': CHART_THEME['subtitle_color']})
+        ], style={'display': 'flex', 'justifyContent': 'space-between', 'marginTop': '6px'})
     ], style={
-        'marginBottom': '24px',
-        'padding': '16px',
-        'backgroundColor': CHART_THEME['background'],
-        'borderRadius': '8px',
-        'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
-        'boxShadow': '0 1px 3px rgba(0, 0, 0, 0.05)'
+        'marginBottom': '16px'
     })
 
 def create_filter_panel(filter_components):
@@ -150,50 +134,50 @@ def create_filter_panel(filter_components):
     return html.Div([
         html.Div([
             html.H3("Filters", 
-                   style={'fontSize': '20px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0'}),
+                   style={'fontSize': '18px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0'}),
             html.Button(
-                "Reset All",
+                "Reset",
                 id="reset-filters-button",
                 style={
                     'backgroundColor': 'transparent',
                     'color': COLOR_PALETTE['primary'][1],
                     'border': 'none',
                     'cursor': 'pointer',
-                    'fontSize': '14px',
+                    'fontSize': '12px',
                     'fontWeight': '500',
-                    'padding': '8px 12px',
-                    'borderRadius': '6px',
+                    'padding': '6px 8px',
+                    'borderRadius': '4px',
                     'transition': 'background-color 0.2s',
                     'outline': 'none',
                 }
             )
-        ], style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '16px'}),
-        html.Hr(style={'margin': '0 0 16px 0', 'borderTop': f'1px solid {CHART_THEME["legend_bordercolor"]}'}),
+        ], style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '12px'}),
+        html.Hr(style={'margin': '0 0 12px 0', 'borderTop': f'1px solid {CHART_THEME["legend_bordercolor"]}'}),
         *filter_components,
         html.Div([
             html.Button(
-                "Apply Filters",
+                "Apply",
                 id="apply-filters-button",
                 style={
                     'backgroundColor': COLOR_PALETTE['primary'][1],
                     'color': 'white',
                     'border': 'none',
-                    'borderRadius': '8px',
-                    'padding': '12px 24px',
-                    'fontSize': '16px',
+                    'borderRadius': '6px',
+                    'padding': '10px 16px',
+                    'fontSize': '14px',
                     'fontWeight': '600',
                     'cursor': 'pointer',
                     'width': '100%',
                     'transition': 'background-color 0.2s',
-                    'boxShadow': f'0 4px 6px -1px {hex_to_rgba(COLOR_PALETTE["primary"][1], 0.2)}'
+                    'boxShadow': f'0 2px 4px -1px {hex_to_rgba(COLOR_PALETTE["primary"][1], 0.2)}'
                 }
             )
-        ], style={'marginTop': '8px'})
+        ], style={'marginTop': '6px'})
     ], style={
         'backgroundColor': CHART_THEME['background'],
-        'borderRadius': '16px',
-        'padding': '24px',
-        'boxShadow': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'borderRadius': '12px',
+        'padding': '16px',
+        'boxShadow': '0 2px 4px -1px rgba(0, 0, 0, 0.1)',
         'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
         'height': 'fit-content'
     })

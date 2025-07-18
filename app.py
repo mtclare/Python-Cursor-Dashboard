@@ -1034,34 +1034,43 @@ app.layout = html.Div([
         # Active filters display
         active_filters_display,
         
-        # Main content with filters and charts
-        # Left sidebar with filters - fixed position that doesn't scroll with page
+        # Main content with filters and charts using flexbox
         html.Div([
-            filter_panel
+            # Left sidebar with filters - sticky position that scrolls with page initially, then stays fixed
+            html.Div([
+                filter_panel
+            ], style={
+                'width': '220px', 
+                'position': 'sticky',
+                'top': '20px',  # Distance from top when sticky
+                'zIndex': '1000',  # Higher z-index to stay above other content
+                'backgroundColor': 'white',
+                'borderRadius': '12px',
+                'boxShadow': '0 4px 12px -2px rgba(0, 0, 0, 0.08)',
+                'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
+                'padding': '16px',
+                'maxHeight': 'calc(100vh - 40px)',  # Prevent it from going off screen
+                'overflowY': 'auto',  # Add scrolling if needed
+                'alignSelf': 'flex-start',  # Align to top of flex container
+                'flexShrink': '0'  # Prevent shrinking
+            }),
+            
+            # Main content area with charts
+            html.Div(grid, style={
+                'flex': '1',  # Take remaining space
+                'paddingLeft': '40px',  # Space between sidebar and content
+                'paddingRight': '40px',
+                'paddingTop': '20px',
+                'paddingBottom': '20px',
+                'maxWidth': 'calc(100vw - 280px)',  # Prevent exceeding viewport width
+                'boxSizing': 'border-box'  # Include padding in width calculation
+            })
         ], style={
-            'width': '220px', 
-            'position': 'fixed',
-            'left': '20px',
-            'top': '360px',  # Positioned to avoid obscuring KPI cards
-            'zIndex': '999',  # Lower z-index so KPI cards can appear above when scrolling
-            'backgroundColor': 'white',
-            'borderRadius': '12px',
-            'boxShadow': '0 4px 12px -2px rgba(0, 0, 0, 0.08)',
-            'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
-            'padding': '16px',
-            'maxHeight': 'calc(100vh - 380px)',  # Prevent it from going off screen
-            'overflowY': 'auto'  # Add scrolling if needed
-        }),
-        
-        # Main content area with charts - full width with padding
-        html.Div(grid, style={
+            'display': 'flex',
+            'gap': '20px',
             'width': '100%',
-            'paddingLeft': '280px',  # Space for filter panel
-            'paddingRight': '80px',  # Increased to prevent horizontal scrolling
-            'paddingTop': '20px',
-            'paddingBottom': '20px',
-            'maxWidth': '100vw',  # Prevent exceeding viewport width
-            'boxSizing': 'border-box'  # Include padding in width calculation
+            'paddingLeft': '20px',
+            'paddingRight': '20px'
         })
     ], style={'width': '100%'}),
     
@@ -1075,7 +1084,7 @@ app.layout = html.Div([
             html.Span('Confidential - Board Use Only', 
                      style={'fontSize': '12px', 'color': COLOR_PALETTE['accent'][0], 'fontWeight': '600'})
         ], style={'textAlign': 'center', 'padding': '20px 0', 'borderTop': f'1px solid {CHART_THEME["legend_bordercolor"]}'})
-    ], style={'width': '100%', 'padding': '0 80px 0 280px', 'margin': '0 auto', 'boxSizing': 'border-box'})
+    ], style={'width': '100%', 'padding': '0 40px 0 280px', 'margin': '0 auto', 'boxSizing': 'border-box'})
     
 ], style={
     'backgroundColor': '#f8fafc',

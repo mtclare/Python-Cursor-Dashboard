@@ -292,6 +292,16 @@ app.index_string = '''
                 box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
             }
             
+            /* Chart card hover effects */
+            .chart-card {
+                transition: all 0.2s ease-in-out;
+            }
+            
+            .chart-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.08);
+            }
+            
             /* Filter component styling */
             .custom-range-slider .rc-slider-track {
                 background-color: #3b82f6;
@@ -826,41 +836,71 @@ for metric in summary_metrics:
         'flex': '1'
     }))
 
-# Create the enhanced grid layout with better spacing
+# Create the enhanced grid layout with better spacing and padding
 grid = []
 for row in range(4):
     grid.append(html.Div([
         html.Div([
             html.H3(charts_data[row*2]['title'], 
-                   style={'fontSize': '18px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0 0 6px 0'}),
+                   style={
+                       'fontSize': '18px', 
+                       'fontWeight': '700', 
+                       'color': CHART_THEME['title_color'], 
+                       'margin': '0 0 8px 0',
+                       'paddingLeft': '4px'
+                   }),
             html.P(charts_data[row*2]['subtitle'], 
-                  style={'fontSize': '13px', 'color': CHART_THEME['subtitle_color'], 'margin': '0 0 16px 0', 'lineHeight': '1.4'}),
-            charts[row*2]
+                  style={
+                      'fontSize': '13px', 
+                      'color': CHART_THEME['subtitle_color'], 
+                      'margin': '0 0 20px 0', 
+                      'lineHeight': '1.4',
+                      'paddingLeft': '4px'
+                  }),
+            html.Div(charts[row*2], style={'padding': '0 8px'})
         ], style={
             'flex': '1', 
             'backgroundColor': CHART_THEME['background'], 
-            'borderRadius': '12px', 
-            'padding': '20px', 
-            'boxShadow': '0 2px 4px -1px rgba(0, 0, 0, 0.1)',
+            'borderRadius': '16px', 
+            'padding': '24px', 
+            'boxShadow': '0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
             'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
-            'minHeight': '420px'
-        }),
+            'minHeight': '460px',
+            'transition': 'all 0.2s ease-in-out'
+        }, className='chart-card'),
         html.Div([
             html.H3(charts_data[row*2+1]['title'], 
-                   style={'fontSize': '18px', 'fontWeight': '700', 'color': CHART_THEME['title_color'], 'margin': '0 0 6px 0'}),
+                   style={
+                       'fontSize': '18px', 
+                       'fontWeight': '700', 
+                       'color': CHART_THEME['title_color'], 
+                       'margin': '0 0 8px 0',
+                       'paddingLeft': '4px'
+                   }),
             html.P(charts_data[row*2+1]['subtitle'], 
-                  style={'fontSize': '13px', 'color': CHART_THEME['subtitle_color'], 'margin': '0 0 16px 0', 'lineHeight': '1.4'}),
-            charts[row*2+1]
+                  style={
+                      'fontSize': '13px', 
+                      'color': CHART_THEME['subtitle_color'], 
+                      'margin': '0 0 20px 0', 
+                      'lineHeight': '1.4',
+                      'paddingLeft': '4px'
+                  }),
+            html.Div(charts[row*2+1], style={'padding': '0 8px'})
         ], style={
             'flex': '1', 
             'backgroundColor': CHART_THEME['background'], 
-            'borderRadius': '12px', 
-            'padding': '20px', 
-            'boxShadow': '0 2px 4px -1px rgba(0, 0, 0, 0.1)',
+            'borderRadius': '16px', 
+            'padding': '24px', 
+            'boxShadow': '0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
             'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
-            'minHeight': '420px'
-        })
-    ], style={'display': 'flex', 'gap': '20px', 'marginBottom': '20px'}))
+            'minHeight': '460px',
+            'transition': 'all 0.2s ease-in-out'
+        }, className='chart-card')
+    ], style={
+        'display': 'flex', 
+        'gap': '24px', 
+        'marginBottom': '24px'
+    }))
 
 # Create filter components
 # Date range filter
@@ -986,8 +1026,8 @@ app.layout = html.Div([
     html.Div([
         html.H2('Key Performance Indicators', 
                style={'fontSize': '24px', 'fontWeight': '700', 'color': '#1f2937', 'margin': '0 0 24px 0', 'textAlign': 'center'}),
-        html.Div(summary_cards, style={'display': 'flex', 'gap': '24px', 'marginBottom': '48px'})
-    ], style={'width': '100%', 'padding': '0 64px 0 24px', 'margin': '0 auto'}),
+        html.Div(summary_cards, style={'display': 'flex', 'gap': '24px', 'marginBottom': '48px', 'position': 'relative', 'zIndex': '1001'})
+    ], style={'width': '100%', 'padding': '0 64px 0 24px', 'margin': '0 auto', 'position': 'relative', 'zIndex': '1001'}),
     
     # Dashboard content with filters
     html.Div([
@@ -995,30 +1035,35 @@ app.layout = html.Div([
         active_filters_display,
         
         # Main content with filters and charts
+        # Left sidebar with filters - fixed position that doesn't scroll with page
         html.Div([
-            # Left sidebar with filters - made narrower and better styled
-            html.Div([
-                filter_panel
-            ], style={
-                'width': '220px', 
-                'marginRight': '24px',
-                'flexShrink': '0'
-            }),
-            
-            # Main content area with charts - improved spacing
-            html.Div(grid, style={
-                'flex': '1',
-                'minWidth': '0',
-                'maxWidth': 'calc(100% - 244px)'  # Account for filter panel width + margin
-            })
+            filter_panel
         ], style={
-            'display': 'flex', 
-            'alignItems': 'flex-start',
-            'width': '100%',
-            'maxWidth': '1600px',
-            'margin': '0 auto'
+            'width': '220px', 
+            'position': 'fixed',
+            'left': '20px',
+            'top': '360px',  # Positioned to avoid obscuring KPI cards
+            'zIndex': '999',  # Lower z-index so KPI cards can appear above when scrolling
+            'backgroundColor': 'white',
+            'borderRadius': '12px',
+            'boxShadow': '0 4px 12px -2px rgba(0, 0, 0, 0.08)',
+            'border': f'1px solid {CHART_THEME["legend_bordercolor"]}',
+            'padding': '16px',
+            'maxHeight': 'calc(100vh - 380px)',  # Prevent it from going off screen
+            'overflowY': 'auto'  # Add scrolling if needed
         }),
-    ], style={'width': '100%', 'padding': '0 20px'}),
+        
+        # Main content area with charts - full width with padding
+        html.Div(grid, style={
+            'width': '100%',
+            'paddingLeft': '280px',  # Space for filter panel
+            'paddingRight': '80px',  # Increased to prevent horizontal scrolling
+            'paddingTop': '20px',
+            'paddingBottom': '20px',
+            'maxWidth': '100vw',  # Prevent exceeding viewport width
+            'boxSizing': 'border-box'  # Include padding in width calculation
+        })
+    ], style={'width': '100%'}),
     
     # Professional footer with consistent theme colors
     html.Div([
@@ -1030,13 +1075,15 @@ app.layout = html.Div([
             html.Span('Confidential - Board Use Only', 
                      style={'fontSize': '12px', 'color': COLOR_PALETTE['accent'][0], 'fontWeight': '600'})
         ], style={'textAlign': 'center', 'padding': '20px 0', 'borderTop': f'1px solid {CHART_THEME["legend_bordercolor"]}'})
-    ], style={'width': '100%', 'padding': '0 64px 0 24px', 'margin': '0 auto'})
+    ], style={'width': '100%', 'padding': '0 80px 0 280px', 'margin': '0 auto', 'boxSizing': 'border-box'})
     
 ], style={
     'backgroundColor': '#f8fafc',
     'minHeight': '100vh',
     'fontFamily': 'Inter, sans-serif',
-    'padding': '0 0 40px 0'
+    'padding': '0 0 40px 0',
+    'overflowX': 'hidden',  # Prevent horizontal scrolling
+    'maxWidth': '100vw'  # Ensure content doesn't exceed viewport
 })
 
 if __name__ == '__main__':

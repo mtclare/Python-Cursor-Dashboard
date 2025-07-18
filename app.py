@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 import json
+import os
 from color_palette import (
     COLOR_PALETTE, CATEGORICAL_PALETTE, SEQUENTIAL_SCALES, DIVERGING_SCALES,
     hex_to_rgba, get_chart_colors, CHART_THEME, DEFAULT_CHART_CONFIG,
@@ -1096,7 +1097,14 @@ app.layout = html.Div([
 })
 
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port='8050')
+    # Get port from environment variable (Railway sets this)
+    port = int(os.environ.get("PORT", 8000))
+    # Use 0.0.0.0 to allow external connections (required for Railway)
+    host = '0.0.0.0'
+    # Disable debug in production
+    debug = os.environ.get("RAILWAY_ENVIRONMENT") != "production"
+    
+    app.run(debug=debug, host=host, port=port)
 
 # Callback to update filter store when filters change
 @app.callback(
